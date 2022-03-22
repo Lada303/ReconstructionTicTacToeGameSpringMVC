@@ -19,6 +19,8 @@ import java.util.Objects;
 @Controller("/start")
 public class StartController {
 
+    private static final String SERVER_DIR = "C:\\server\\";
+
     private final ReconstructionGame reconstructionGame;
     private final JacksonParser jacksonParser;
     private final StaXParser staXParser;
@@ -51,7 +53,7 @@ public class StartController {
                 name = file.getOriginalFilename();
                 System.out.println(name);
                 //указать путь куда сервер будет закачивать файлы
-                File dir = new File("C:\\server\\");
+                File dir = new File(SERVER_DIR);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }

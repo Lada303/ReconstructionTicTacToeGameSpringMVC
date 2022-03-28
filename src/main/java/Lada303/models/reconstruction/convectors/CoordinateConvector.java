@@ -1,4 +1,4 @@
-package Lada303.reconstructionApp.convectors;
+package Lada303.models.reconstruction.convectors;
 
 /*
 Общия интрефейс для создания конвекторов координат ячеки

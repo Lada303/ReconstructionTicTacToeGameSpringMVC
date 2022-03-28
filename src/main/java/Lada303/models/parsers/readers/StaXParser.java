@@ -1,12 +1,14 @@
-package Lada303.reconstructionApp.parsers;
+package Lada303.models.parsers.readers;
 
 /*
 Осуществлеят парсинг xml-файлов
 Использует StAX
  */
 
-import Lada303.reconstructionApp.models.Player;
-import Lada303.reconstructionApp.models.Step;
+import Lada303.models.gamemap.Dots;
+import Lada303.models.players.HumanGamer;
+import Lada303.services.ParserTag;
+import Lada303.models.reconstruction.Step;
 import org.springframework.stereotype.Component;
 
 import javax.xml.stream.XMLEventReader;
@@ -64,41 +66,42 @@ public class StaXParser implements Parser{
     }
 
     private void readPlayer(StartElement startElement) {
-        if (startElement.getName().getLocalPart().equals(GameTag.PLAYER)) {
-            element = new Player();
+        if (startElement.getName().getLocalPart().equals(ParserTag.PLAYER)) {
+            int id = 0;
+            Dots dot = Dots.X;
+            String name = "Some";
             Iterator<Attribute> attributes = startElement.getAttributes();
             while (attributes.hasNext()) {
                 Attribute attribute = attributes.next();
-                if (attribute.getName().toString().equals(GameTag.PLAYER_ID)) {
-                    ((Player) element).setId(attribute.getValue());
+                if (attribute.getName().toString().equals(ParserTag.PLAYER_ID)) {
+                    id = Integer.parseInt(attribute.getValue());
+                    dot = (id == 1 ? Dots.X : Dots.O);
                 }
-                if (attribute.getName().toString().equals(GameTag.PLAYER_NAME)) {
-                    ((Player) element).setName(attribute.getValue());
-                }
-                if (attribute.getName().toString().equals(GameTag.PLAYER_SYMBOL)) {
-                    ((Player) element).setSymbol(attribute.getValue());
+                if (attribute.getName().toString().equals(ParserTag.PLAYER_NAME)) {
+                    name = attribute.getValue();
                 }
             }
+            element = new HumanGamer(id, name, dot);
         }
     }
 
     private void readMap(StartElement startElement) throws XMLStreamException {
-        if (startElement.getName().getLocalPart().equals(GameTag.MAP)) {
+        if (startElement.getName().getLocalPart().equals(ParserTag.MAP)) {
             XMLEvent event = eventReader.nextEvent();
             element = event.asCharacters().getData();
         }
     }
 
     private void readStep(StartElement startElement) throws XMLStreamException {
-        if (startElement.getName().getLocalPart().equals(GameTag.STEP)) {
+        if (startElement.getName().getLocalPart().equals(ParserTag.STEP)) {
             element = new Step();
             Iterator<Attribute> attributes = startElement.getAttributes();
             while (attributes.hasNext()) {
                 Attribute attribute = attributes.next();
-                if (attribute.getName().toString().equals(GameTag.STEP_NUM)) {
+                if (attribute.getName().toString().equals(ParserTag.STEP_NUM)) {
                     ((Step) element).setNum(attribute.getValue());
                 }
-                if (attribute.getName().toString().equals(GameTag.STEP_PLAYER_ID)) {
+                if (attribute.getName().toString().equals(ParserTag.STEP_PLAYER_ID)) {
                     ((Step) element).setPlayerId(attribute.getValue());
                 }
             }
@@ -108,7 +111,7 @@ public class StaXParser implements Parser{
     }
 
     private void readResult(StartElement startElement) throws XMLStreamException {
-        if (startElement.getName().getLocalPart().equals(GameTag.RESULT)) {
+        if (startElement.getName().getLocalPart().equals(ParserTag.RESULT)) {
             XMLEvent event = eventReader.nextEvent();
             if (event.isCharacters()) {
                 element = event.asCharacters().getData();

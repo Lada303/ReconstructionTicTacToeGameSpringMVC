@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>Reconstruction TicTacToe Game by file</title>
+</head>
+<body>
+<h3>
+  <form th:method="POST" th:action="@{/gameplay/reconstruction}" enctype="multipart/form-data">
+    <p th:text="${msg}"></p>
+    File to upload: <input type="file" th:name="file">
+    <br/>
+    <br/>
+    <a>Press here to upload the file! -> </a>
+    <input type="submit" value="Upload">
+  </form>
+  <br/>
+  <br/>
+  <a>Go to start page App, press -> </a>
+  <a href = "/gameplay"><input type="submit" value="Hello Page"></a>
+</h3>
+</body>
+</html>

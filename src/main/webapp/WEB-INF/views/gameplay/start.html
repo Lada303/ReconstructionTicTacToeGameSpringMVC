@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToe Game App</title>
+</head>
+<body>
+<h1>Hello!</h1>
+    <h3>
+        <br>
+        <br>
+        <a>1. To start the Game, select the settings: </a>
+    </h3>
+    <form th:method="GET" th:action="@{/gameplay/game}">
+        <h5>
+            <p><b>Mode Game</b></p>
+            <p><input name="mode" type="radio" value="player">Player</p>
+            <p><input name="mode" type="radio" checked value="AI">AI</p>
+            <p><b>Type file for record</b></p>
+            <p><input name="type" type="radio" value="xml">xml</p>
+            <p><input name="type" type="radio" checked value="json">json
+            <a>Press here to select game mode and start game -> </a>
+            <a><input type="submit" value="Select"></a>
+        </h5>
+    </form>
+    <h3>
+        <br>
+        <br>
+        <a>2. To start Reconstruction game, press -> </a>
+        <a href = "/gameplay/reconstruction"><input type="submit" value="Start"></a>
+    </h3>
+</body>
+</html>

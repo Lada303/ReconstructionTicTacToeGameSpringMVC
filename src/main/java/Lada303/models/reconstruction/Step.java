@@ -1,4 +1,4 @@
-package Lada303.reconstructionApp.models;
+package Lada303.models.reconstruction;
 
 public class Step {
     private String num;

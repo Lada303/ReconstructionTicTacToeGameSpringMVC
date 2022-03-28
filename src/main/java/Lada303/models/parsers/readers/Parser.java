@@ -1,4 +1,4 @@
-package Lada303.reconstructionApp.parsers;
+package Lada303.models.parsers.readers;
 
 /*
 Общий интерфейс для парсеров файлов содержащих процесс игры

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToeGame: End of round</title>
+</head>
+<body>
+<h3>
+    <p th:text="${msg}"></p>
+    <div th:each="line : ${lines}">
+        <p th:text="${line}"></p>
+    </div>
+    <br>
+    <a>Start new round game, press -> </a>
+    <a href = "/gameplay/game/player"><input type="submit" value="Start Game"></a>
+    <br>
+    <br>
+    <a>Go to start page App, press -> </a>
+    <a href = "/gameplay"><input type="submit" value="Hello Page"></a>
+    <br>
+</h3>
+</body>
+</html>

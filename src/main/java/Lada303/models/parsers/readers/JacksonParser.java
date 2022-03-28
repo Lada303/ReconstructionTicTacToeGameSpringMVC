@@ -1,12 +1,14 @@
-package Lada303.reconstructionApp.parsers;
+package Lada303.models.parsers.readers;
 
 /*
 Осуществлеят парсинг json-файлов
 Использует jackson потоковое API
  */
 
-import Lada303.reconstructionApp.models.Player;
-import Lada303.reconstructionApp.models.Step;
+import Lada303.models.gamemap.Dots;
+import Lada303.models.players.HumanGamer;
+import Lada303.services.ParserTag;
+import Lada303.models.reconstruction.Step;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -40,28 +42,28 @@ public class JacksonParser implements Parser{
 
             while(jsonParser.nextToken() != JsonToken.END_OBJECT) {
                 String name = jsonParser.getCurrentName();
-                if (name == null || name.equals(GameTag.GAME_PLAY)) {
+                if (name == null || name.equals(ParserTag.GAME_PLAY)) {
                     continue;
                 }
                 switch (name){
-                    case GameTag.PLAYER -> {
+                    case ParserTag.PLAYER -> {
                         readPlayer();
                         if(drawResult) {
                             drawResult = false;
                         }
                     }
-                    case GameTag.MAP -> {
+                    case ParserTag.MAP -> {
                         jsonParser.nextToken();
                         element = jsonParser.getValueAsString();
                         list.add(element);
                     }
-                    case GameTag.STEP -> readStep();
-                    case GameTag.RESULT -> drawResult = true;
+                    case ParserTag.STEP -> readStep();
+                    case ParserTag.RESULT -> drawResult = true;
                 }
             }
 
             if (drawResult) {
-                list.add(GameTag.DRAW);
+                list.add(ParserTag.DRAW);
             }
 
             jsonParser.close();
@@ -72,21 +74,21 @@ public class JacksonParser implements Parser{
     }
 
     private void readPlayer() throws IOException {
-        element = new Player();
+        int id = 0;
+        Dots dot = Dots.X;
+        String name = "Some";
         while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
-            if (jsonParser.getCurrentName().equals(GameTag.PLAYER_ID)) {
+            if (jsonParser.getCurrentName().equals(ParserTag.PLAYER_ID)) {
                 jsonParser.nextToken();
-                ((Player) element).setId(jsonParser.getValueAsString());
+                id = jsonParser.getValueAsInt();
+                dot = (id == 1 ? Dots.X : Dots.O);
             }
-            if (jsonParser.getCurrentName().equals(GameTag.PLAYER_NAME)) {
+            if (jsonParser.getCurrentName().equals(ParserTag.PLAYER_NAME)) {
                 jsonParser.nextToken();
-                ((Player) element).setName(jsonParser.getValueAsString());
-            }
-            if (jsonParser.getCurrentName().equals(GameTag.PLAYER_SYMBOL)) {
-                jsonParser.nextToken();
-                ((Player) element).setSymbol(jsonParser.getValueAsString());
+                name = jsonParser.getValueAsString();
             }
         }
+        element = new HumanGamer(id, name, dot);
         list.add(element);
     }
 
@@ -97,15 +99,15 @@ public class JacksonParser implements Parser{
                 if (jsonParser.getCurrentName() == null) {
                     continue;
                 }
-                if (jsonParser.getCurrentName().equals(GameTag.STEP_NUM)) {
+                if (jsonParser.getCurrentName().equals(ParserTag.STEP_NUM)) {
                     jsonParser.nextToken();
                     ((Step) element).setNum(jsonParser.getValueAsString());
                 }
-                if (jsonParser.getCurrentName().equals(GameTag.STEP_PLAYER_ID)) {
+                if (jsonParser.getCurrentName().equals(ParserTag.STEP_PLAYER_ID)) {
                     jsonParser.nextToken();
                     ((Step) element).setPlayerId(jsonParser.getValueAsString());
                 }
-                if (jsonParser.getCurrentName().equals(GameTag.STEP_VALUE)) {
+                if (jsonParser.getCurrentName().equals(ParserTag.STEP_VALUE)) {
                     jsonParser.nextToken();
                     ((Step) element).setCellValue(jsonParser.getValueAsString());
                 }

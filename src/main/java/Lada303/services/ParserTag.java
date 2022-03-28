@@ -1,10 +1,10 @@
-package Lada303.reconstructionApp.parsers;
+package Lada303.services;
 /*
 Содержит в себе ключевые слова - теги для записи и чтения хода игры
 Используется *Writer из GameApp для записи файла
 Используется *Parser из ReconstructionApp для парсинга файла
  */
-public class GameTag {
+public class ParserTag {
     public static final String GAME_PLAY = "Gameplay";
     public static final String GAME = "Game";
     public static final String PLAYER = "Player";

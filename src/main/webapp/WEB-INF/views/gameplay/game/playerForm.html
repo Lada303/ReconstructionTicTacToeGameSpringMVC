@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToeGame: Player form registration</title>
+</head>
+<body>
+<h3>Player form registration</h3>
+<form th:method="POST" th:action="@{/gameplay/game/player}">
+    <h5>
+        <label for="name1" > Name Player 1 </label>
+            <input name="name1" type="text" id="name1" maxlength="21">
+        <br>
+        <br>
+        <label for="name2" > Name Player 2 </label>
+            <input name="name2" type="text" id="name2" th:value="${name2}" maxlength="21">
+        <br>
+        <br>
+        <a><input type="submit" value="Add Players"></a>
+    </h5>
+</form>
+</body>
+</html>

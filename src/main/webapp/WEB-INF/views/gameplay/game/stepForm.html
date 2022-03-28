@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title> TicTacToeGame: Playing</title>
+</head>
+<body>
+<h3><p th:text="${msg}"></p>
+    <br>
+    <p>Field of the game round:</p>
+    <div th:each="line : ${lines}">
+        <p th:text="${line}"></p>
+    </div>
+</h3>
+<form th:method="POST" th:action="@{/gameplay/game/step}">
+    <h3>
+        <a>Player "</a><a th:text="${playerName}"></a>
+        <a>",  your dot is "</a><a th:text="${playerDot}"></a>
+        <br>
+        <a>Enter you step coordinate -></a>
+    </h3>
+    <h5>
+        <br>
+        <label for="X"> Column number - X -> </label>
+        <input name="X" type="number" id="X" required min="1" max="9" value="1">
+        <br>
+        <br>
+        <label for="Y"> Row number - Y -> </label>
+        <input name="Y" type="number" id="Y" required min="1" max="9" value="1">
+        <br>
+        <br>
+        <a><input type="submit" value="Doing step"></a>
+        <a>If the AI move - just press the button again</a>
+    </h5>
+</form>
+</body>
+</html>

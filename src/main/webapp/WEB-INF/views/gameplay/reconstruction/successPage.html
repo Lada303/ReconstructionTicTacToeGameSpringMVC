@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Reconstruction TicTacToe Game by file</title>
+</head>
+<body>
+<h3><p th:text="${msg}"></p></h3>
+<h5>
+    <div th:each="line : ${lines}">
+        <p th:text="${line}"></p>
+    </div>
+</h5>
+<h3>
+    <br>
+    <a>Upload new file, press -> </a>
+    <a href = "/gameplay/reconstruction"><input type="submit" value="Upload new file"></a>
+    <br>
+    <br>
+    <a>Go to start page App, press -> </a>
+    <a href = "/gameplay"><input type="submit" value="Hello Page"></a>
+</h3>
+</body>
+</html>
+

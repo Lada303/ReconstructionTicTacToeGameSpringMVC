@@ -1,4 +1,4 @@
-package Lada303.models.parsers.writers;
+package Lada303.services.parsers.writers;
 
 /*
 Записывает json-фаил используя Jackson, потоковую форму записи.
@@ -6,7 +6,7 @@ package Lada303.models.parsers.writers;
 */
 
 import Lada303.models.players.Gamer;
-import Lada303.services.ParserTag;
+import Lada303.utils.ParserTag;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;

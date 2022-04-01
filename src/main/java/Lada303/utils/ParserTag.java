@@ -1,4 +1,4 @@
-package Lada303.services;
+package Lada303.utils;
 /*
 Содержит в себе ключевые слова - теги для записи и чтения хода игры
 Используется *Writer из GameApp для записи файла

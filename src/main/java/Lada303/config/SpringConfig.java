@@ -1,5 +1,6 @@
 package Lada303.config;
 
+import Lada303.utils.ServerPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -55,5 +56,11 @@ public class SpringConfig implements WebMvcConfigurer {
         multipartResolver.setMaxUploadSize(200000);
         return multipartResolver;
     }
+
+    //Инициализация директории для записи файлов игры сервером
+    @Bean
+    ServerPath serverPath() {
+        return new ServerPath();
+     }
 
 }

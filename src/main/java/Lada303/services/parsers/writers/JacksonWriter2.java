@@ -1,4 +1,4 @@
-package Lada303.models.parsers.writers;
+package Lada303.services.parsers.writers;
 /*
 Записывает объект в json-фаил
 !!! Структура записи не полностью соотвествует установленной
@@ -6,7 +6,7 @@ package Lada303.models.parsers.writers;
 */
 
 import Lada303.models.players.Gamer;
-import Lada303.services.ParserTag;
+import Lada303.utils.ParserTag;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;

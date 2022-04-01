@@ -4,7 +4,7 @@ package Lada303.models.players;
 Абстрактный класс, описывающий общие свойства игроков
  */
 
-import Lada303.models.gameplay.Competition;
+import Lada303.services.gameplay.Competition;
 import Lada303.models.gamemap.Cell;
 import Lada303.models.gamemap.Dots;
 import com.fasterxml.jackson.annotation.JsonGetter;

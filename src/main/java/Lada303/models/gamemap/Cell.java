@@ -39,7 +39,6 @@ public class Cell {
         if (this.columnNumber != that.columnNumber) return false;
         if (this.rowNumber != that.rowNumber) return false;
         return this.dot == that.dot;
-
     }
 
     @Override

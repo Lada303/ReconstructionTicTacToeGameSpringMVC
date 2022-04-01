@@ -1,4 +1,4 @@
-package Lada303.models.parsers.writers;
+package Lada303.services.parsers.writers;
 
 /*
 Записывает xml-фаил используя StAx, потоковую форму записи XMLOutputFactory.
@@ -6,7 +6,7 @@ package Lada303.models.parsers.writers;
 */
 
 import Lada303.models.players.Gamer;
-import Lada303.services.ParserTag;
+import Lada303.utils.ParserTag;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;

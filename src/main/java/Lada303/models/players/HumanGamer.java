@@ -1,6 +1,6 @@
 package Lada303.models.players;
 
-import Lada303.models.gameplay.Competition;
+import Lada303.services.gameplay.Competition;
 import Lada303.models.gamemap.Dots;
 import Lada303.models.gamemap.GameMap;
 

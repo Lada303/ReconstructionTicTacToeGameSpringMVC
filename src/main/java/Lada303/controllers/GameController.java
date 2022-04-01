@@ -1,6 +1,6 @@
 package Lada303.controllers;
 
-import Lada303.models.gameplay.Competition;
+import Lada303.services.gameplay.Competition;
 import Lada303.models.gamemap.Dots;
 import Lada303.models.players.AIGamer;
 import Lada303.models.players.HumanGamer;
@@ -39,7 +39,7 @@ public class GameController {
         } else {
             competition.setGamer2(new HumanGamer(2, name2.isEmpty() ? "Player2" : name2, Dots.O));
         }
-        competition.setJudge();
+        competition.getJudge().setCompetition(competition);
         return "gameplay/game/mapForm";
     }
 

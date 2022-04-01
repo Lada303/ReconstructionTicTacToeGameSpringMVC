@@ -53,7 +53,7 @@ public class GameMap {
     public Cell[] getD1(Cell cell) {
         int b = cell.getRowNumber() - cell.getColumnNumber();
         Cell[] d1 = new Cell[map.length];
-        for (int i = (b >= 0 ? b : 0); i < d1.length - (b >= 0 ? 0 : -b); i++) {
+        for (int i = (Math.max(b, 0)); i < d1.length - (b >= 0 ? 0 : -b); i++) {
             d1[i] = map[i][i - b];
         }
         return d1;
@@ -104,7 +104,5 @@ public class GameMap {
         mapAsString.add("---------");
         return mapAsString;
     }
-
-
 
 }

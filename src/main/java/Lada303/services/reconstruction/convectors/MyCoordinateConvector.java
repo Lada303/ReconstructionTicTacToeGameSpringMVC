@@ -1,4 +1,4 @@
-package Lada303.models.reconstruction.convectors;
+package Lada303.services.reconstruction.convectors;
 /*
 Получает строку и возвращает координыта ячейки в нужном формате - массив из двух целых чисел Х и Y
 Переводит в координаты строки:

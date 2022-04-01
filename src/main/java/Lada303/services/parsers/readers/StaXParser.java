@@ -1,4 +1,4 @@
-package Lada303.models.parsers.readers;
+package Lada303.services.parsers.readers;
 
 /*
 Осуществлеят парсинг xml-файлов
@@ -7,8 +7,8 @@ package Lada303.models.parsers.readers;
 
 import Lada303.models.gamemap.Dots;
 import Lada303.models.players.HumanGamer;
-import Lada303.services.ParserTag;
-import Lada303.models.reconstruction.Step;
+import Lada303.utils.ParserTag;
+import Lada303.models.Step;
 import org.springframework.stereotype.Component;
 
 import javax.xml.stream.XMLEventReader;

@@ -1,4 +1,4 @@
-package Lada303.models.parsers.writers;
+package Lada303.services.parsers.writers;
 
 /*
 Общий интерфейс для записи файлов содержащих процесс игры

@@ -1,13 +1,14 @@
-package Lada303.models.reconstruction;
+package Lada303.services.reconstruction;
 /*
 Производит непосредственно отрисовку процесса игры
 В этом классе можно заменить на нужный конвектор координат
  */
+import Lada303.models.Step;
 import Lada303.models.gamemap.Dots;
 import Lada303.models.gamemap.GameMap;
 import Lada303.models.players.Gamer;
-import Lada303.models.reconstruction.convectors.CoordinateConvector;
-import Lada303.models.reconstruction.convectors.MyCoordinateConvector;
+import Lada303.services.reconstruction.convectors.CoordinateConvector;
+import Lada303.services.reconstruction.convectors.MyCoordinateConvector;
 
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;

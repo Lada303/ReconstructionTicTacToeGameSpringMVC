@@ -1,4 +1,4 @@
-package Lada303.models.gameplay;
+package Lada303.services.gameplay;
 
 /*
 "Соревнование" - игру идут подряд, пока пользователь не прервет
@@ -12,18 +12,24 @@ package Lada303.models.gameplay;
 import Lada303.models.gamemap.Cell;
 import Lada303.models.gamemap.GameMap;
 import Lada303.models.players.Gamer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Competition {
 
+    private final CompetitionJudge judge;
     private String mode;
     private String typeFile;
     private Gamer gamer1;
     private Gamer gamer2;
-    private CompetitionJudge judge;
     private GameMap map;
     private int dots_to_win;
+
+    @Autowired
+    public Competition(CompetitionJudge judge) {
+        this.judge = judge;
+    }
 
     public void setMode(String mode) {
         this.mode = mode;
@@ -43,10 +49,6 @@ public class Competition {
 
     public void setMap(int x, int y) {
         this.map = new GameMap(x, y);
-    }
-
-    public void setJudge() {
-        this.judge = new CompetitionJudge(this);
     }
 
     public void setDots_to_win(int dots_to_win) {
@@ -82,8 +84,6 @@ public class Competition {
     }
 
     public void startNewRound() {
-        judge.setMap(map);
-        judge.setDots_to_win(dots_to_win);
         judge.resetCountStep();
         judge.clearListStep();
         judge.resetWhoseMove();

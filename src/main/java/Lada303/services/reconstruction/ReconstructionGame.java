@@ -8,8 +8,9 @@ import Lada303.models.gamemap.Dots;
 import Lada303.models.gamemap.GameMap;
 import Lada303.models.players.Gamer;
 import Lada303.services.reconstruction.convectors.CoordinateConvector;
-import Lada303.services.reconstruction.convectors.MyCoordinateConvector;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,14 @@ import java.util.List;
 @Component
 public class ReconstructionGame {
 
+    private final CoordinateConvector coordinateConvector;
+
+    @Autowired
+    public ReconstructionGame(@Qualifier("myCoordinateConvector") CoordinateConvector coordinateConvector) {
+        this.coordinateConvector = coordinateConvector;
+    }
+
     public List<String> reconstruction(List<Object> listReadFile) {
-        // Введите нужный конвектор коорлинат
-        CoordinateConvector coordinateConvector = new MyCoordinateConvector();
         //первые две строки списка - это два ирока
         listReadFile.remove(0);
         listReadFile.remove(0);

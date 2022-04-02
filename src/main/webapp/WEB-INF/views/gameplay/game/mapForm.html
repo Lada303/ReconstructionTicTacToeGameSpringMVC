@@ -5,7 +5,8 @@
     <title>TicTacToeGame: game map</title>
 </head>
 <body>
-<h3>Set the size of the field and the number of dots to win</h3>
+<h1><p th:text="${msg}"></p></h1>
+<br>
 <form th:method="GET" th:action="@{/gameplay/game/map}">
     <h5>
         <a>All values can be from 3 to 9:</a>

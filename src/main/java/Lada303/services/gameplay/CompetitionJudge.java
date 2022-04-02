@@ -36,6 +36,7 @@ public class CompetitionJudge {
     private List<String> listStep;
     private WriteGameToFile writer;
     private String lastWinner;
+    private int lastWinner_id;
     private File parserFile;
     private String typeWriter;
 
@@ -117,15 +118,13 @@ public class CompetitionJudge {
             if (lastCell.getDot() == Dots.X && checkWin(lastCell)) {
                 competition.getGamer1().incrementScore();
                 lastWinner = competition.getGamer1().getName();
-                lookCounterFile();
-                writer.writeGameToFile(parserFile, competition.getMap().getSize(), 1);
+                lastWinner_id = 1;
                 return true;
             }
             if (lastCell.getDot() == Dots.O && checkWin(lastCell)) {
                 competition.getGamer2().incrementScore();
                 lastWinner = competition.getGamer2().getName();
-                lookCounterFile();
-                writer.writeGameToFile(parserFile, competition.getMap().getSize(), 2);
+                lastWinner_id = 2;
                 return true;
             }
         }
@@ -164,9 +163,8 @@ public class CompetitionJudge {
     public boolean isDraw() {
         if (countStep >= competition.getMap().getCountColumn() * competition.getMap().getCountRow()) {
             lastWinner = "Draw!!!";
+            lastWinner_id = 0;
             drawScore++;
-            lookCounterFile();
-            writer.writeGameToFile(parserFile, competition.getMap().getSize(), 0);
             return true;
         }
         return false;
@@ -179,5 +177,11 @@ public class CompetitionJudge {
                     + "_" + countFiles + typeWriter;
             parserFile = new File(dir_write.getAbsolutePath() + File.separator + name);
          } while (parserFile.exists());
-     }
+    }
+
+    public void writeGameplayFile() {
+        lookCounterFile();
+        writer.writeGameToFile(parserFile, competition.getMap().getSize(), lastWinner_id);
+    }
+
 }

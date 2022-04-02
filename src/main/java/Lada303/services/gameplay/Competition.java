@@ -117,6 +117,7 @@ public class Competition {
         if (judge.isWin(lastCell) || judge.isDraw()) {
             judge.printScore();
             judge.printScoreToFile();
+            judge.writeGameplayFile();
             return true;
         }
         return false;

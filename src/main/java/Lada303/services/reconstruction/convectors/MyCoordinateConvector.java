@@ -1,4 +1,7 @@
 package Lada303.services.reconstruction.convectors;
+
+import org.springframework.stereotype.Component;
+
 /*
 Получает строку и возвращает координыта ячейки в нужном формате - массив из двух целых чисел Х и Y
 Переводит в координаты строки:
@@ -7,7 +10,7 @@ package Lada303.services.reconstruction.convectors;
 - два числа разделенных любыми символами
 - если поле 3*3 и ячейки записаны под номерами 1..9
 */
-
+@Component()
 public class MyCoordinateConvector implements CoordinateConvector {
 
     public int[] mapCoordinateConvector(String strMapCoordinate) {

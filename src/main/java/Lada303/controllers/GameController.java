@@ -1,5 +1,6 @@
 package Lada303.controllers;
 
+import Lada303.exeptions.GameDataException;
 import Lada303.services.gameplay.Competition;
 import Lada303.models.gamemap.Dots;
 import Lada303.models.players.AIGamer;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/gameplay/game")
 @Controller("/gameplay/game")
+@ControllerAdvice
 public class GameController {
 
     private final Competition competition;
@@ -44,8 +46,9 @@ public class GameController {
     }
 
     @GetMapping("/player")
-    public String startNewRound() {
-         return "gameplay/game/mapForm";
+    public String startNewRound(Model model) {
+        model.addAttribute("msg", "Set the size of the field and the number of dots to win");
+        return "gameplay/game/mapForm";
     }
 
     @GetMapping("/map")
@@ -53,12 +56,25 @@ public class GameController {
                                 @RequestParam("Y") int mapY,
                                 @RequestParam("dots_to_win") int dots_to_win,
                                 Model model) {
+        try {
+            if (Math.min(mapX, mapY) < dots_to_win) {
+                throw new GameDataException("the number of Dots_to_win cannot be more than the minimum side of the field\n");
+            }
+            if (Math.min(mapX, mapY) - 1 > dots_to_win) {
+                throw new GameDataException("the number of Dots_to_win cannot be less than the minimum side of the field by more than 1\n");
+            }
+        } catch (GameDataException e) {
+            model.addAttribute("msg", e.getMessage());
+            return "/gameplay/game/mapForm";
+        }
+
         competition.setMap(mapX, mapY);
         competition.setDots_to_win(dots_to_win);
         competition.startNewRound();
         model.addAttribute("msg", "Start game");
         model.addAttribute("playerName", competition.getGamer1().getName());
         model.addAttribute("playerDot", competition.getGamer1().getDots());
+        model.addAttribute("dots_to_win", competition.getDots_to_win());
         model.addAttribute("lines", competition.getMap().mapAsString());
         return "gameplay/game/stepForm";
     }
@@ -82,6 +98,7 @@ public class GameController {
             competition.getGamer1().getName() : competition.getGamer2().getName());
         model.addAttribute("playerDot", competition.getJudge().getWhoseMove() == 1 ?
                 competition.getGamer1().getDots() : competition.getGamer2().getDots());
+        model.addAttribute("dots_to_win", competition.getDots_to_win());
         model.addAttribute("lines", competition.getMap().mapAsString());
         return "gameplay/game/stepForm";
     }

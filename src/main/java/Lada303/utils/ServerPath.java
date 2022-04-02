@@ -8,8 +8,8 @@ import java.io.File;
 public class ServerPath {
     public static final String SERVER_DIR = "C:\\server\\";
     public static final String SERVER_DIR_UPLOAD = "C:\\server\\uploadFile\\";
-    public static final String SERVER_DIR_WRITE = "C:\\server\\writeFile";
-    public static final String SERVER_DIR_LOGGER = "C:\\server\\loggerFiles";
+    public static final String SERVER_DIR_WRITE = "C:\\server\\writeFile\\";
+    public static final String SERVER_DIR_LOGGER = "C:\\server\\loggerFiles\\";
 
     {
         File dir = new File(SERVER_DIR);
@@ -25,7 +25,7 @@ public class ServerPath {
         if(!dir_write.exists()) {
             dir_write.mkdir();
         }
-        if(!dir_write.exists()) {
+        if(!dir_logger.exists()) {
             dir_logger.mkdir();
         }
     }

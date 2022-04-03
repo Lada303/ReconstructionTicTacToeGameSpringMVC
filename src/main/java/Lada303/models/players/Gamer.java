@@ -4,7 +4,7 @@ package Lada303.models.players;
 Абстрактный класс, описывающий общие свойства игроков
  */
 
-import Lada303.services.gameplay.Competition;
+import Lada303.services.game.Game;
 import Lada303.models.gamemap.Cell;
 import Lada303.utils.enums.Dots;
 
@@ -55,6 +55,6 @@ public abstract class Gamer implements GamerDoing {
         this.score++;
     }
 
-    public abstract boolean doStep(Competition competition);
+    public abstract boolean doStep(Game game);
 
 }

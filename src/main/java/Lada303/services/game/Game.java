@@ -1,4 +1,4 @@
-package Lada303.services.gameplay;
+package Lada303.services.game;
 
 /*
 "Соревнование" - игру идут подряд, пока пользователь не прервет
@@ -16,9 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Competition {
+public class Game {
 
-    private final CompetitionJudge judge;
+    private final GameManager gameManager;
     private String mode;
     private String typeFile;
     private Gamer gamer1;
@@ -27,8 +27,8 @@ public class Competition {
     private int dots_to_win;
 
     @Autowired
-    public Competition(CompetitionJudge judge) {
-        this.judge = judge;
+    public Game(GameManager judge) {
+        this.gameManager = judge;
     }
 
     public void setMode(String mode) {
@@ -71,8 +71,8 @@ public class Competition {
         return gamer2;
     }
 
-    public CompetitionJudge getJudge() {
-        return judge;
+    public GameManager getGameManager() {
+        return gameManager;
     }
 
     public GameMap getMap() {
@@ -84,13 +84,13 @@ public class Competition {
     }
 
     public void startNewRound() {
-        judge.resetCountStep();
-        judge.clearListStep();
-        judge.resetWhoseMove();
+        gameManager.resetCountStep();
+        gameManager.clearListStep();
+        gameManager.resetWhoseMove();
     }
 
     public boolean isPlayerDidStep(int stepX, int stepY) {
-        if (judge.getWhoseMove() == 1) {
+        if (gameManager.getWhoseMove() == 1) {
             gamer1.setCell(stepX, stepY);
             if (!gamer1.doStep(this)){
                 return false;
@@ -104,19 +104,19 @@ public class Competition {
             }
         }
 
-        Cell lastCell = judge.getWhoseMove() == 1 ? gamer1.getCell() : gamer2.getCell();
-        judge.addToListStep(lastCell);
-        judge.incrementCountStep();
-        judge.changeWhoseMove();
+        Cell lastCell = gameManager.getWhoseMove() == 1 ? gamer1.getCell() : gamer2.getCell();
+        gameManager.addToListStep(lastCell);
+        gameManager.incrementCountStep();
+        gameManager.changeWhoseMove();
         return true;
     }
 
     public boolean isTheEndOfRound(){
         //т.к. поменяла игрока в isPlayerDidStep на нового, а надо проверить именно ход старого игрока
-        Cell lastCell = judge.getWhoseMove() == -1 ? gamer1.getCell() : gamer2.getCell();
-        if (judge.isWin(lastCell) || judge.isDraw()) {
-            judge.printScoreToFile();
-            judge.writeGameplayFile();
+        Cell lastCell = gameManager.getWhoseMove() == -1 ? gamer1.getCell() : gamer2.getCell();
+        if (gameManager.isWin(lastCell) || gameManager.isDraw()) {
+            gameManager.printScoreToFile();
+            gameManager.writeGameplayFile();
             return true;
         }
         return false;

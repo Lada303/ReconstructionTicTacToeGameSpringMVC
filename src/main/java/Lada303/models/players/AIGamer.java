@@ -1,6 +1,6 @@
 package Lada303.models.players;
 
-import Lada303.services.gameplay.Competition;
+import Lada303.services.game.Game;
 import Lada303.models.gamemap.Cell;
 import Lada303.utils.enums.Dots;
 import Lada303.models.gamemap.GameMap;
@@ -16,15 +16,15 @@ public class AIGamer extends Gamer {
     }
 
     @Override
-    public boolean doStep(Competition competition) {
-        GameMap map = competition.getMap();
-        for (int decrement = 1; decrement <  competition.getDots_to_win(); decrement++) {
+    public boolean doStep(Game game) {
+        GameMap map = game.getMap();
+        for (int decrement = 1; decrement <  game.getDots_to_win(); decrement++) {
             //шаг для победы
-            if (decrement == 1 && isAIStep(this.getCell(), decrement, competition)) {
+            if (decrement == 1 && isAIStep(this.getCell(), decrement, game)) {
                 break;
             }
             //шаг для помехи
-            if (isAIStep(competition.getGamer1().getCell(), decrement, competition)) {
+            if (isAIStep(game.getGamer1().getCell(), decrement, game)) {
                 break;
             }
         }
@@ -41,27 +41,27 @@ public class AIGamer extends Gamer {
     }
 
     //выбирает шаг
-    private boolean isAIStep(Cell lastCell, int decrement, Competition competition) {
-        GameMap map = competition.getMap();
+    private boolean isAIStep(Cell lastCell, int decrement, Game game) {
+        GameMap map = game.getMap();
         if (lastCell == null ||
-                competition.getJudge().getCountStep() < competition.getDots_to_win() * 2 - 1 && lastCell.getDot() == Dots.O) {
+                game.getGameManager().getCountStep() < game.getDots_to_win() * 2 - 1 && lastCell.getDot() == Dots.O) {
             return false;
         }
-        if (map.isD1(lastCell, competition.getDots_to_win())
-                && countDotsInLine(lastCell.getDot(), map.getD1(lastCell)) == competition.getDots_to_win() - decrement
+        if (map.isD1(lastCell, game.getDots_to_win())
+                && countDotsInLine(lastCell.getDot(), map.getD1(lastCell)) == game.getDots_to_win() - decrement
                 && isEmptyValidCellInLine(map.getD1(lastCell), lastCell)) {
             return true;
         }
-        if (map.isD2(lastCell,competition.getDots_to_win())
-                && countDotsInLine(lastCell.getDot(), map.getD2(lastCell)) == competition.getDots_to_win() - decrement
+        if (map.isD2(lastCell,game.getDots_to_win())
+                && countDotsInLine(lastCell.getDot(), map.getD2(lastCell)) == game.getDots_to_win() - decrement
                 && isEmptyValidCellInLine(map.getD2(lastCell), lastCell)) {
             return true;
         }
-        if (countDotsInLine(lastCell.getDot(), map.getRow(lastCell)) == competition.getDots_to_win() - decrement
+        if (countDotsInLine(lastCell.getDot(), map.getRow(lastCell)) == game.getDots_to_win() - decrement
                 && isEmptyValidCellInLine(map.getRow(lastCell), lastCell)) {
             return true;
         }
-        return countDotsInLine(lastCell.getDot(), map.getColumn(lastCell)) == competition.getDots_to_win() - decrement
+        return countDotsInLine(lastCell.getDot(), map.getColumn(lastCell)) == game.getDots_to_win() - decrement
                 && isEmptyValidCellInLine(map.getColumn(lastCell), lastCell);
     }
 

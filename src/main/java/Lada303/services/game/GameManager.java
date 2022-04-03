@@ -1,4 +1,4 @@
-package Lada303.services.gameplay;
+package Lada303.services.game;
 /*
 "Судья"
 - следит за игрой (кто ходит, какой сечас шаг и т.п.)
@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CompetitionJudge {
+public class GameManager {
     private static final File dir_write = new File(ServerPath.SERVER_DIR_WRITE);
     private static final File dir = new File(ServerPath.SERVER_DIR);
 
-    private Competition competition;
+    private Game game;
     private int drawScore;
     private int whoseMove;
     private int countStep;
@@ -40,16 +40,16 @@ public class CompetitionJudge {
     private File parserFile;
     private String typeWriter;
 
-    public void setCompetition(Competition competition) {
-        this.competition = competition;
+    public void setGame(Game game) {
+        this.game = game;
         this.drawScore = 0;
         this.listStep = new ArrayList<>();
-        if (competition.getTypeFile().contains("xml")) {
+        if (game.getTypeFile().contains("xml")) {
             this.typeWriter = ".xml";
-            this.writer = new StaxWriter(competition.getGamer1(), competition.getGamer2(), listStep);
+            this.writer = new StaxWriter(game.getGamer1(), game.getGamer2(), listStep);
         } else {
             this.typeWriter = ".json";
-            this.writer = new JacksonWriter(competition.getGamer1(), competition.getGamer2(), listStep);
+            this.writer = new JacksonWriter(game.getGamer1(), game.getGamer2(), listStep);
         }
     }
 
@@ -92,13 +92,13 @@ public class CompetitionJudge {
     public void printScoreToFile() {
         File file = new File(dir.getAbsolutePath() + File.separator + "Score.txt");
         try (BufferedWriter out = new BufferedWriter(new FileWriter(file, true))) {
-            if (competition.getGamer1().getScore() + competition.getGamer2().getScore() + drawScore == 1) {
+            if (game.getGamer1().getScore() + game.getGamer2().getScore() + drawScore == 1) {
                 out.write("\n");
                 out.write("Новое соревнование:\n");
             }
             out.write(String.format("Счет:\t%s : %d\t\t%s : %d\t\tНичья : %d\n",
-                    competition.getGamer1().getName(), competition.getGamer1().getScore(),
-                    competition.getGamer2().getName(), competition.getGamer2().getScore(),
+                    game.getGamer1().getName(), game.getGamer1().getScore(),
+                    game.getGamer2().getName(), game.getGamer2().getScore(),
                     drawScore));
         } catch (IOException e) {
             System.out.println("Exp: " + e.getMessage());
@@ -106,16 +106,16 @@ public class CompetitionJudge {
     }
 
     public boolean isWin(Cell lastCell) {
-        if (countStep >= competition.getDots_to_win() * 2 - 1) {
+        if (countStep >= game.getDots_to_win() * 2 - 1) {
             if (lastCell.getDot() == Dots.X && checkWin(lastCell)) {
-                competition.getGamer1().incrementScore();
-                lastWinner = competition.getGamer1().getName();
+                game.getGamer1().incrementScore();
+                lastWinner = game.getGamer1().getName();
                 lastWinner_id = 1;
                 return true;
             }
             if (lastCell.getDot() == Dots.O && checkWin(lastCell)) {
-                competition.getGamer2().incrementScore();
-                lastWinner = competition.getGamer2().getName();
+                game.getGamer2().incrementScore();
+                lastWinner = game.getGamer2().getName();
                 lastWinner_id = 2;
                 return true;
             }
@@ -125,21 +125,21 @@ public class CompetitionJudge {
 
     private boolean checkWin(Cell lastCell) {
         if (countNonInterruptDotsToWin(lastCell.getDot(),
-                competition.getMap().getRow(lastCell)) == competition.getDots_to_win()) {
+                game.getMap().getRow(lastCell)) == game.getDots_to_win()) {
             return true;
         }
         if (countNonInterruptDotsToWin(lastCell.getDot(),
-                competition.getMap().getColumn(lastCell)) == competition.getDots_to_win()) {
+                game.getMap().getColumn(lastCell)) == game.getDots_to_win()) {
             return true;
         }
-        if (competition.getMap().isD1(lastCell, competition.getDots_to_win()) &&
-                countNonInterruptDotsToWin(lastCell.getDot(), competition.getMap().getD1(lastCell))
-                        == competition.getDots_to_win()) {
+        if (game.getMap().isD1(lastCell, game.getDots_to_win()) &&
+                countNonInterruptDotsToWin(lastCell.getDot(), game.getMap().getD1(lastCell))
+                        == game.getDots_to_win()) {
             return true;
         }
-        return (competition.getMap().isD2(lastCell, competition.getDots_to_win()) &&
-                countNonInterruptDotsToWin(lastCell.getDot(), competition.getMap().getD2(lastCell))
-                        == competition.getDots_to_win());
+        return (game.getMap().isD2(lastCell, game.getDots_to_win()) &&
+                countNonInterruptDotsToWin(lastCell.getDot(), game.getMap().getD2(lastCell))
+                        == game.getDots_to_win());
     }
 
     // неприрывающаяся последовательность симоволов - для определения победителя
@@ -147,13 +147,13 @@ public class CompetitionJudge {
         int counter = 0;
         for (Cell cell : arrCells) {
             counter = (cell != null && cell.getDot() == dot ? counter + 1 : 0);
-            if (counter == competition.getDots_to_win()) return counter;
+            if (counter == game.getDots_to_win()) return counter;
         }
         return counter;
     }
 
     public boolean isDraw() {
-        if (countStep >= competition.getMap().getCountColumn() * competition.getMap().getCountRow()) {
+        if (countStep >= game.getMap().getCountColumn() * game.getMap().getCountRow()) {
             lastWinner = "Draw!!!";
             lastWinner_id = 0;
             drawScore++;
@@ -165,7 +165,7 @@ public class CompetitionJudge {
     private void lookCounterFile() {
        do {
             countFiles++;
-            String name = competition.getGamer1().getName()+"Vs" + competition.getGamer2().getName()
+            String name = game.getGamer1().getName()+"Vs" + game.getGamer2().getName()
                     + "_" + countFiles + typeWriter;
             parserFile = new File(dir_write.getAbsolutePath() + File.separator + name);
          } while (parserFile.exists());
@@ -173,7 +173,7 @@ public class CompetitionJudge {
 
     public void writeGameplayFile() {
         lookCounterFile();
-        writer.writeGameToFile(parserFile, competition.getMap().getSize(), lastWinner_id);
+        writer.writeGameToFile(parserFile, game.getMap().getSize(), lastWinner_id);
     }
 
 }

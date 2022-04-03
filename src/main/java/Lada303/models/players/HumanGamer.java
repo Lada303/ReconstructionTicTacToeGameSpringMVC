@@ -1,6 +1,6 @@
 package Lada303.models.players;
 
-import Lada303.services.gameplay.Competition;
+import Lada303.services.game.Game;
 import Lada303.utils.enums.Dots;
 import Lada303.models.gamemap.GameMap;
 
@@ -11,12 +11,12 @@ public class HumanGamer extends Gamer {
     }
 
     @Override
-    public boolean doStep(Competition competition) {
+    public boolean doStep(Game game) {
         int x = this.getCell().getColumnNumber();
         int y = this.getCell().getRowNumber();
-        if (isValidEmpty(x, y, competition.getMap())) {
-            competition.getMap().getCell(x, y).setDot(this.getDots());
-            this.setCell(competition.getMap().getCell(x, y));
+        if (isValidEmpty(x, y, game.getMap())) {
+            game.getMap().getCell(x, y).setDot(this.getDots());
+            this.setCell(game.getMap().getCell(x, y));
             return true;
         }
         return false;

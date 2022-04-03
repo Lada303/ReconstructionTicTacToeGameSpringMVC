@@ -5,7 +5,7 @@ package Lada303.services.parsers.readers;
 Использует StAX
  */
 
-import Lada303.models.gamemap.Dots;
+import Lada303.utils.enums.Dots;
 import Lada303.models.players.HumanGamer;
 import Lada303.utils.ParserTag;
 import Lada303.models.Step;

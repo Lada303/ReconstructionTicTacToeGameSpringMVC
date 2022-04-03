@@ -9,9 +9,9 @@ package Lada303.services.gameplay;
 */
 
 import Lada303.models.gamemap.Cell;
-import Lada303.models.gamemap.Dots;
+import Lada303.utils.enums.Dots;
 import Lada303.services.parsers.writers.JacksonWriter;
-import Lada303.services.parsers.writers.StaxWriter2;
+import Lada303.services.parsers.writers.StaxWriter;
 import Lada303.services.parsers.writers.WriteGameToFile;
 import Lada303.utils.ServerPath;
 import org.springframework.stereotype.Component;
@@ -46,7 +46,7 @@ public class CompetitionJudge {
         this.listStep = new ArrayList<>();
         if (competition.getTypeFile().contains("xml")) {
             this.typeWriter = ".xml";
-            this.writer = new StaxWriter2(competition.getGamer1(), competition.getGamer2(), listStep);
+            this.writer = new StaxWriter(competition.getGamer1(), competition.getGamer2(), listStep);
         } else {
             this.typeWriter = ".json";
             this.writer = new JacksonWriter(competition.getGamer1(), competition.getGamer2(), listStep);
@@ -87,14 +87,6 @@ public class CompetitionJudge {
 
     public void addToListStep(Cell lastCell) {
         listStep.add((lastCell.getColumnNumber() + 1) + " " + (lastCell.getRowNumber() + 1));
-    }
-
-    public void printScore() {
-        System.out.printf("Счет:\t%s : %d\t\t%s : %d\t\tНичья : %d\n%n",
-                competition.getGamer1().getName(), competition.getGamer1().getScore(),
-                competition.getGamer2().getName(), competition.getGamer2().getScore(),
-                drawScore);
-        System.out.println();
     }
 
     public void printScoreToFile() {

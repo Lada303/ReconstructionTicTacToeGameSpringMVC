@@ -4,7 +4,7 @@ package Lada303.services.reconstruction;
 В этом классе можно заменить на нужный конвектор координат
  */
 import Lada303.models.Step;
-import Lada303.models.gamemap.Dots;
+import Lada303.utils.enums.Dots;
 import Lada303.models.gamemap.GameMap;
 import Lada303.models.players.Gamer;
 import Lada303.services.reconstruction.convectors.CoordinateConvector;

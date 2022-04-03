@@ -6,20 +6,14 @@ package Lada303.models.players;
 
 import Lada303.services.gameplay.Competition;
 import Lada303.models.gamemap.Cell;
-import Lada303.models.gamemap.Dots;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import Lada303.utils.enums.Dots;
 
-@JsonRootName(value = "Player")
 public abstract class Gamer implements GamerDoing {
 
     private final int id;
     private final String name;
     private final Dots dots;
-    @JsonIgnore
     private Cell cell;
-    @JsonIgnore
     private int score;
 
     public Gamer(int id, String name, Dots dots) {
@@ -37,7 +31,6 @@ public abstract class Gamer implements GamerDoing {
         return name;
     }
 
-    @JsonGetter("symbol")
     public Dots getDots() {
         return dots;
     }
@@ -53,6 +46,7 @@ public abstract class Gamer implements GamerDoing {
     public void setCell(int x, int y) {
         this.cell = new Cell(x, y);
     }
+
     public int getScore() {
         return score;
     }

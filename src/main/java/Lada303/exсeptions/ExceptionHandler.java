@@ -1,4 +1,4 @@
-package Lada303.exeptions;
+package Lada303.exсeptions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

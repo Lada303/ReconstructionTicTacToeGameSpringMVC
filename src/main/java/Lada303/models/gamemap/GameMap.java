@@ -1,6 +1,7 @@
 package Lada303.models.gamemap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameMap {
@@ -51,21 +52,25 @@ public class GameMap {
     }
 
     public Cell[] getD1(Cell cell) {
-        int b = cell.getRowNumber() - cell.getColumnNumber();
+        int b = cell.getColumnNumber() - cell.getRowNumber();
         Cell[] d1 = new Cell[map.length];
-        for (int i = (Math.max(b, 0)); i < d1.length - (b >= 0 ? 0 : -b); i++) {
-            d1[i] = map[i][i - b];
+        for (int i = 0; i < d1.length; i++) {
+            if (i + b >= 0 && i + b < map[0].length) {
+                d1[i] = map[i][i + b];
+            }
         }
         return d1;
     }
 
     public Cell[] getD2(Cell cell) {
-        int b = cell.getRowNumber() + cell.getColumnNumber();
+        int b = cell.getColumnNumber() + cell.getRowNumber();
         Cell[] d2 = new Cell[map.length];
-        for (int i = (b < map.length ? 0 : b - (map.length - 1));
-             i < d2.length - (b < map.length ? (map.length - 1) - b : 0); i++) {
-            d2[i] = (map[i][b - i]);
+        for (int i = 0; i < map.length ; i++) {
+            if (b - i >= 0 && b - i < map[0].length) {
+                d2[i] = map[i][b - i];
+            }
         }
+        System.out.println(Arrays.toString(d2));
         return d2;
     }
 

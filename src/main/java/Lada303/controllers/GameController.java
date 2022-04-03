@@ -1,8 +1,8 @@
 package Lada303.controllers;
 
-import Lada303.exeptions.GameDataException;
+import Lada303.exсeptions.GameDataException;
 import Lada303.services.gameplay.Competition;
-import Lada303.models.gamemap.Dots;
+import Lada303.utils.enums.Dots;
 import Lada303.models.players.AIGamer;
 import Lada303.models.players.HumanGamer;
 import org.springframework.beans.factory.annotation.Autowired;

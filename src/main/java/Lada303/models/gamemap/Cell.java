@@ -1,5 +1,7 @@
 package Lada303.models.gamemap;
 
+import Lada303.utils.enums.Dots;
+
 public class Cell {
 
     private final int columnNumber;

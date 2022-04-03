@@ -1,7 +1,7 @@
 package Lada303.models.players;
 
 import Lada303.services.gameplay.Competition;
-import Lada303.models.gamemap.Dots;
+import Lada303.utils.enums.Dots;
 import Lada303.models.gamemap.GameMap;
 
 public class HumanGamer extends Gamer {

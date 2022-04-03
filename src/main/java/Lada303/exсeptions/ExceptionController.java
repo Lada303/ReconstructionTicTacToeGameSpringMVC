@@ -1,4 +1,4 @@
-package Lada303.exeptions;
+package Lada303.exсeptions;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

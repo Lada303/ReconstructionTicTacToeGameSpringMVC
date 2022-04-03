@@ -1,6 +1,6 @@
 package Lada303.controllers;
 
-import Lada303.exeptions.UploadFileException;
+import Lada303.exсeptions.UploadFileException;
 import Lada303.services.reconstruction.ReconstructionGame;
 import Lada303.services.parsers.readers.JacksonParser;
 import Lada303.services.parsers.readers.StaXParser;
@@ -49,10 +49,10 @@ public class ReconstructionController {
                 throw new UploadFileException("uploadFile is null or empty");
             }
             if (file.getContentType() == null) {
-                throw new UploadFileException("because type of file is null.");
+                throw new UploadFileException("type of file is null.");
             }
             if (!file.getContentType().contains("xml") && !file.getContentType().contains("json")) {
-                throw new UploadFileException("because the file not *.json or *.xml.");
+                throw new UploadFileException("the file not *.json or *.xml.");
             }
 
             byte[] bytes = file.getBytes();

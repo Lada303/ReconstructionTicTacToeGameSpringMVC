@@ -115,7 +115,6 @@ public class Competition {
         //т.к. поменяла игрока в isPlayerDidStep на нового, а надо проверить именно ход старого игрока
         Cell lastCell = judge.getWhoseMove() == -1 ? gamer1.getCell() : gamer2.getCell();
         if (judge.isWin(lastCell) || judge.isDraw()) {
-            judge.printScore();
             judge.printScoreToFile();
             judge.writeGameplayFile();
             return true;

@@ -2,7 +2,7 @@ package Lada303.models.players;
 
 import Lada303.services.gameplay.Competition;
 import Lada303.models.gamemap.Cell;
-import Lada303.models.gamemap.Dots;
+import Lada303.utils.enums.Dots;
 import Lada303.models.gamemap.GameMap;
 
 import java.util.Random;

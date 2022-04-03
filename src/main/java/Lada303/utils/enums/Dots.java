@@ -1,4 +1,4 @@
-package Lada303.models.gamemap;
+package Lada303.utils.enums;
 
 public enum Dots {
     X , O

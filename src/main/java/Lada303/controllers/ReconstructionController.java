@@ -2,8 +2,8 @@ package Lada303.controllers;
 
 import Lada303.exсeptions.UploadFileException;
 import Lada303.services.reconstruction.ReconstructionGame;
-import Lada303.services.parsers.readers.JacksonParser;
-import Lada303.services.parsers.readers.StaXParser;
+import Lada303.utils.parsers.readers.JacksonParser;
+import Lada303.utils.parsers.readers.StaXParser;
 import Lada303.utils.ServerPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,10 +1,11 @@
-package Lada303.services.parsers.writers;
+package Lada303.utils.parsers.writers;
 
 /*
 Записывает json-фаил используя Jackson, потоковую форму записи.
 Записывает ход игры согласно установленной структуре
 */
 
+import Lada303.models.Step;
 import Lada303.models.players.Gamer;
 import Lada303.utils.ParserTag;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -20,10 +21,10 @@ public class JacksonWriter implements WriteGameToFile{
 
     private final Gamer gamer1;
     private final Gamer gamer2;
-    private final List<String> listStep;
+    private final List<Step> listStep;
     private JsonGenerator jsonGenerator;
 
-    public JacksonWriter(Gamer gamer1, Gamer gamer2, List<String> listStep) {
+    public JacksonWriter(Gamer gamer1, Gamer gamer2, List<Step> listStep) {
         this.gamer1 = gamer1;
         this.gamer2 = gamer2;
         this.listStep = listStep;
@@ -74,8 +75,8 @@ public class JacksonWriter implements WriteGameToFile{
         for (int i = 0; i < listStep.size(); i++) {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField(ParserTag.STEP_NUM,i + 1);
-            jsonGenerator.writeStringField(ParserTag.STEP_PLAYER_ID, i % 2 == 0 ? "1" : "2");
-            jsonGenerator.writeStringField(ParserTag.STEP_VALUE, listStep.get(i));
+            jsonGenerator.writeNumberField(ParserTag.STEP_PLAYER_ID, i % 2 == 0 ? 1 : 2);
+            jsonGenerator.writeStringField(ParserTag.STEP_VALUE, listStep.get(i).getCellValue());
             jsonGenerator.writeEndObject();
         }
         jsonGenerator.writeEndArray();

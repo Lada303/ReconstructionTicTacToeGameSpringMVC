@@ -1,23 +1,31 @@
 package Lada303.models;
 
-public class Step {
-    private String num;
-    private String playerId;
+public class Step{
+    private int num;
+    private int playerId;
     private String cellValue;
 
-    public String getNum() {
+    public Step() {}
+
+    public Step(int num, int playerId, String cellValue) {
+        this.num = num;
+        this.playerId = playerId;
+        this.cellValue = cellValue;
+    }
+
+    public int getNum() {
         return num;
     }
 
-    public void setNum(String num) {
+    public void setNum(int num) {
         this.num = num;
     }
 
-    public String getPlayerId() {
+    public int getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(String playerId) {
+    public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
 

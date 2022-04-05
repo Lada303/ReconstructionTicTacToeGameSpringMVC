@@ -41,7 +41,7 @@ public class ReconstructionGame {
         for (Object item : listReadFile) {
             if (item instanceof Step) { // игровове поле после каждого шага
                 int[] xy = coordinateConvector.mapCoordinateConvector(((Step) item).getCellValue());
-                map.getCell(xy[1], xy[0]).setDot(((Step) item).getPlayerId().equals("1") ? Dots.X : Dots.O);
+                map.getCell(xy[1], xy[0]).setDot(((Step) item).getPlayerId() == 1 ? Dots.X : Dots.O);
                 gameText.addAll(map.mapAsString());
             } else { // GameResult
                 if (item instanceof String) {

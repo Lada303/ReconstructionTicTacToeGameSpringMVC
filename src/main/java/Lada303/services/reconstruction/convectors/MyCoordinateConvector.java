@@ -21,8 +21,8 @@ public class MyCoordinateConvector implements CoordinateConvector {
             str = strMapCoordinate.replaceAll("[^0-9]+", "");
         }
         int[] xy = new int[2];
-        xy[0] = Integer.parseInt(str.substring(0, 1)) - 1;
-        xy[1] = Integer.parseInt(str.substring(1)) - 1;
+        xy[0] = Integer.parseInt(str.substring(0, 1));
+        xy[1] = Integer.parseInt(str.substring(1));
         return xy;
     }
 

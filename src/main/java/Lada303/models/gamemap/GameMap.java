@@ -85,7 +85,7 @@ public class GameMap {
     }
 
     public String getSize() {
-        return map[0].length + " " + map.length;
+        return map[0].length + "*" + map.length;
     }
 
     public List<String > mapAsString() {

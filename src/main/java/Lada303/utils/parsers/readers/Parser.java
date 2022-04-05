@@ -1,4 +1,4 @@
-package Lada303.services.parsers.readers;
+package Lada303.utils.parsers.readers;
 
 /*
 Общий интерфейс для парсеров файлов содержащих процесс игры

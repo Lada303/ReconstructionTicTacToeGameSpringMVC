@@ -1,4 +1,4 @@
-package Lada303.services.parsers.readers;
+package Lada303.utils.parsers.readers;
 
 /*
 Осуществлеят парсинг xml-файлов
@@ -99,10 +99,10 @@ public class StaXParser implements Parser{
             while (attributes.hasNext()) {
                 Attribute attribute = attributes.next();
                 if (attribute.getName().toString().equals(ParserTag.STEP_NUM)) {
-                    ((Step) element).setNum(attribute.getValue());
+                    ((Step) element).setNum(Integer.parseInt(attribute.getValue()));
                 }
                 if (attribute.getName().toString().equals(ParserTag.STEP_PLAYER_ID)) {
-                    ((Step) element).setPlayerId(attribute.getValue());
+                    ((Step) element).setPlayerId(Integer.parseInt(attribute.getValue()));
                 }
             }
             XMLEvent event = eventReader.nextEvent();

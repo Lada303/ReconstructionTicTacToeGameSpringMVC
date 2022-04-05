@@ -5,7 +5,7 @@
     <title>TicTacToeGame: game map</title>
 </head>
 <body>
-<h1><p th:text="${msg}"></p></h1>
+<h1><p name="msg" th:text="${msg}"></p></h1>
 <br>
 <form th:method="GET" th:action="@{/gameplay/game/map}">
     <h5>

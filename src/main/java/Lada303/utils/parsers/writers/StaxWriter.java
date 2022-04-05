@@ -1,10 +1,11 @@
-package Lada303.services.parsers.writers;
+package Lada303.utils.parsers.writers;
 
 /*
 Записывает xml-фаил используя StAx, потоковую форму записи eventFactory.
 Записывает ход игры согласно установленной структуре
 */
 
+import Lada303.models.Step;
 import Lada303.models.players.Gamer;
 import Lada303.utils.ParserTag;
 
@@ -21,7 +22,7 @@ public class StaxWriter implements WriteGameToFile {
 
     private final Gamer gamer1;
     private final Gamer gamer2;
-    private final List<String> listStep;
+    private final List<Step> listStep;
 
     private final XMLEventFactory eventFactory;
     private XMLEventWriter eventWriter;
@@ -29,7 +30,7 @@ public class StaxWriter implements WriteGameToFile {
     private final XMLEvent tab1;
     private final XMLEvent tab2;
 
-    public StaxWriter(Gamer gamer1, Gamer gamer2, List<String> listStep) {
+    public StaxWriter(Gamer gamer1, Gamer gamer2, List<Step> listStep) {
         this.gamer1 = gamer1;
         this.gamer2 = gamer2;
         this.listStep = listStep;
@@ -94,19 +95,19 @@ public class StaxWriter implements WriteGameToFile {
         eventWriter.add(eventFactory.createStartElement("","", ParserTag.GAME));
         eventWriter.add(end);
         for (int i = 0; i < listStep.size(); i++) {
-            stepWriter(String.valueOf(i + 1), i % 2 == 0 ? "1" : "2", listStep.get(i));
+            stepWriter((i + 1), i % 2 == 0 ? 1 : 2, listStep.get(i).getCellValue());
         }
         eventWriter.add(tab1);
         eventWriter.add(eventFactory.createEndElement("", "", ParserTag.GAME));
         eventWriter.add(end);
     }
 
-    private void stepWriter(String stepCounter, String numGamer, String cellStep)
+    private void stepWriter(int stepCounter, int numGamer, String cellStep)
             throws XMLStreamException {
         eventWriter.add(tab2);
         eventWriter.add(eventFactory.createStartElement("", "", ParserTag.STEP));
-        eventWriter.add(eventFactory.createAttribute(ParserTag.STEP_NUM, stepCounter));
-        eventWriter.add(eventFactory.createAttribute(ParserTag.STEP_PLAYER_ID, numGamer));
+        eventWriter.add(eventFactory.createAttribute(ParserTag.STEP_NUM, String.valueOf(stepCounter)));
+        eventWriter.add(eventFactory.createAttribute(ParserTag.STEP_PLAYER_ID, String.valueOf(numGamer)));
         eventWriter.add(eventFactory.createCharacters(cellStep));
         eventWriter.add(eventFactory.createEndElement("", "", ParserTag.STEP));
         eventWriter.add(end);

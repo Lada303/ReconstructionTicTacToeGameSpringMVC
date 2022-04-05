@@ -1,4 +1,4 @@
-package Lada303.services.parsers.readers;
+package Lada303.utils.parsers.readers;
 
 /*
 Осуществлеят парсинг json-файлов
@@ -101,11 +101,11 @@ public class JacksonParser implements Parser{
                 }
                 if (jsonParser.getCurrentName().equals(ParserTag.STEP_NUM)) {
                     jsonParser.nextToken();
-                    ((Step) element).setNum(jsonParser.getValueAsString());
+                    ((Step) element).setNum(jsonParser.getValueAsInt());
                 }
                 if (jsonParser.getCurrentName().equals(ParserTag.STEP_PLAYER_ID)) {
                     jsonParser.nextToken();
-                    ((Step) element).setPlayerId(jsonParser.getValueAsString());
+                    ((Step) element).setPlayerId(jsonParser.getValueAsInt());
                 }
                 if (jsonParser.getCurrentName().equals(ParserTag.STEP_VALUE)) {
                     jsonParser.nextToken();

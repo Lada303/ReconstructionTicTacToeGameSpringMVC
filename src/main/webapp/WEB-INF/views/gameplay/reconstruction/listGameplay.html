@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToe Game - list gameplay</title>
+</head>
+<body>
+<h1>Select gameplay</h1>
+<h3>
+    <div th:each="gameplay : ${listGameplay}">
+        <a th:href="@{/gameplay/reconstruction/db/{id}(id=${gameplay.getId_gameplay()})}" th:text="${gameplay.getId_gameplay()}"></a>
+        <a>___</a>
+        <a th:text="${gameplay.getName_gameplay()}"></a>
+        <a>___</a>
+        <a th:text="${gameplay.getMap_size()}"></a>
+    </div>
+    <br/>
+    <br/>
+    <a>OR go to start page App, press -> </a>
+    <a href = "/gameplay"><input type="submit" value="Hello Page"></a>
+</h3>
+</body>
+</html>

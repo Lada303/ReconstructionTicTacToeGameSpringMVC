@@ -9,6 +9,7 @@ package Lada303.services.game;
 - выбираем количество фишек для выгрыша
 */
 
+import Lada303.models.Step;
 import Lada303.models.gamemap.Cell;
 import Lada303.models.gamemap.GameMap;
 import Lada303.models.players.Gamer;
@@ -21,14 +22,16 @@ public class Game {
     private final GameManager gameManager;
     private String mode;
     private String typeFile;
+    private int id_gameplay;
+    private String name_gameplay;
     private Gamer gamer1;
     private Gamer gamer2;
     private GameMap map;
     private int dots_to_win;
 
     @Autowired
-    public Game(GameManager judge) {
-        this.gameManager = judge;
+    public Game(GameManager gameManager) {
+        this.gameManager = gameManager;
     }
 
     public void setMode(String mode) {
@@ -37,6 +40,14 @@ public class Game {
 
     public void setTypeFile(String typeFile) {
         this.typeFile = typeFile;
+    }
+
+    public void setId_gameplay(int id_gameplay) {
+        this.id_gameplay = id_gameplay;
+    }
+
+    public void setName_gameplay(String name_gameplay) {
+        this.name_gameplay = name_gameplay;
     }
 
     public void setGamer1(Gamer gamer1) {
@@ -55,6 +66,10 @@ public class Game {
         this.dots_to_win = dots_to_win;
     }
 
+    public GameManager getGameManager() {
+        return gameManager;
+    }
+
     public String getMode() {
         return mode;
     }
@@ -63,16 +78,20 @@ public class Game {
         return typeFile;
     }
 
+    public int getId_gameplay() {
+        return id_gameplay;
+    }
+
+    public String getName_gameplay() {
+        return name_gameplay;
+    }
+
     public Gamer getGamer1() {
         return gamer1;
     }
 
     public Gamer getGamer2() {
         return gamer2;
-    }
-
-    public GameManager getGameManager() {
-        return gameManager;
     }
 
     public GameMap getMap() {
@@ -105,15 +124,16 @@ public class Game {
         }
 
         Cell lastCell = gameManager.getWhoseMove() == 1 ? gamer1.getCell() : gamer2.getCell();
-        gameManager.addToListStep(lastCell);
         gameManager.incrementCountStep();
-        gameManager.changeWhoseMove();
+        gameManager.addToListStep(new Step(gameManager.getCountStep(),
+                gameManager.getWhoseMove() == 1 ? 1 : 2,
+                (lastCell.getColumnNumber()) + " " + (lastCell.getRowNumber())));
         return true;
     }
 
     public boolean isTheEndOfRound(){
-        //т.к. поменяла игрока в isPlayerDidStep на нового, а надо проверить именно ход старого игрока
-        Cell lastCell = gameManager.getWhoseMove() == -1 ? gamer1.getCell() : gamer2.getCell();
+        Cell lastCell = gameManager.getWhoseMove() == 1 ? gamer1.getCell() : gamer2.getCell();
+        gameManager.changeWhoseMove();
         if (gameManager.isWin(lastCell) || gameManager.isDraw()) {
             gameManager.printScoreToFile();
             gameManager.writeGameplayFile();

@@ -8,11 +8,12 @@ package Lada303.services.game;
 - записывает процесс игры в фаил
 */
 
+import Lada303.models.Step;
 import Lada303.models.gamemap.Cell;
 import Lada303.utils.enums.Dots;
-import Lada303.services.parsers.writers.JacksonWriter;
-import Lada303.services.parsers.writers.StaxWriter;
-import Lada303.services.parsers.writers.WriteGameToFile;
+import Lada303.utils.parsers.writers.JacksonWriter;
+import Lada303.utils.parsers.writers.StaxWriter;
+import Lada303.utils.parsers.writers.WriteGameToFile;
 import Lada303.utils.ServerPath;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +34,7 @@ public class GameManager {
     private int whoseMove;
     private int countStep;
     private int countFiles;
-    private List<String> listStep;
+    private List<Step> listStep;
     private WriteGameToFile writer;
     private String lastWinner;
     private int lastWinner_id;
@@ -73,6 +74,10 @@ public class GameManager {
         return lastWinner;
     }
 
+    public int getLastWinner_id() {
+        return lastWinner_id;
+    }
+
     public void incrementCountStep() {
         this.countStep++;
     }
@@ -85,8 +90,12 @@ public class GameManager {
         listStep.clear();
     }
 
-    public void addToListStep(Cell lastCell) {
-        listStep.add((lastCell.getColumnNumber() + 1) + " " + (lastCell.getRowNumber() + 1));
+    public void addToListStep(Step step) {
+        listStep.add(step);
+    }
+
+    public Step getLastStep() {
+        return listStep.get(listStep.size() - 1);
     }
 
     public void printScoreToFile() {
@@ -165,8 +174,7 @@ public class GameManager {
     private void lookCounterFile() {
        do {
             countFiles++;
-            String name = game.getGamer1().getName()+"Vs" + game.getGamer2().getName()
-                    + "_" + countFiles + typeWriter;
+            String name = game.getName_gameplay() + "_" + countFiles + typeWriter;
             parserFile = new File(dir_write.getAbsolutePath() + File.separator + name);
          } while (parserFile.exists());
     }

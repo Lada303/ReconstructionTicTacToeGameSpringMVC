@@ -1,4 +1,4 @@
-package modelsTest;
+package Lada303.modelsTest;
 
 import Lada303.models.gamemap.Cell;
 import Lada303.models.gamemap.GameMap;
@@ -301,9 +301,9 @@ public class GameMapTest {
     }
     public static Stream<Arguments> dataForTestGetSize() {
         List<Arguments> out = new ArrayList<>();
-        out.add(Arguments.arguments(gameMap33, "3 3"));
-        out.add(Arguments.arguments(gameMap53, "5 3"));
-        out.add(Arguments.arguments(gameMap55, "5 5"));
+        out.add(Arguments.arguments(gameMap33, "3*3"));
+        out.add(Arguments.arguments(gameMap53, "5*3"));
+        out.add(Arguments.arguments(gameMap55, "5*5"));
         return out.stream();
     }
 

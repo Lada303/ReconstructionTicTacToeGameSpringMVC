@@ -1,7 +1,7 @@
 package Lada303.modelsTest;
 
-import Lada303.models.gamemap.Cell;
-import Lada303.models.gamemap.GameMap;
+import Lada303.services.gameplay.gameplaymap.Cell;
+import Lada303.services.gameplay.gameplaymap.GameplayMap;
 import Lada303.utils.enums.Dots;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class GameMapTest {
+public class GameplayMapTest {
 
-    private static final GameMap gameMap33 = new GameMap(3, 3);
-    private static final GameMap gameMap53 = new GameMap(5, 3);
-    private static final GameMap gameMap55 = new GameMap(5, 5);
+    private static final GameplayMap gameMap33 = new GameplayMap(3, 3);
+    private static final GameplayMap gameMap53 = new GameplayMap(5, 3);
+    private static final GameplayMap gameMap55 = new GameplayMap(5, 5);
 
     @ParameterizedTest
     @MethodSource("dataForTestIsCellValid")
-    public void testIsCellValid(GameMap gameMap, boolean result, int x, int y) {
+    public void testIsCellValid(GameplayMap gameMap, boolean result, int x, int y) {
         Assertions.assertEquals(result, gameMap.isCellValid(x, y));
     }
     public static Stream<Arguments> dataForTestIsCellValid() {
@@ -46,7 +46,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestGetCountRow")
-    public void testGetCountRow(GameMap gameMap, int result) {
+    public void testGetCountRow(GameplayMap gameMap, int result) {
         Assertions.assertEquals(result, gameMap.getCountRow());
     }
     public static Stream<Arguments> dataForTestGetCountRow() {
@@ -59,7 +59,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestGetCountColumn")
-    public void testGetCountColumn(GameMap gameMap, int result) {
+    public void testGetCountColumn(GameplayMap gameMap, int result) {
         Assertions.assertEquals(result, gameMap.getCountColumn());
     }
     public static Stream<Arguments> dataForTestGetCountColumn() {
@@ -72,7 +72,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestGetCell1")
-    public void testGetCell1(GameMap gameMap, Cell result, int x, int y) {
+    public void testGetCell1(GameplayMap gameMap, Cell result, int x, int y) {
         Assertions.assertEquals(result, gameMap.getCell(x, y));
     }
     public static Stream<Arguments> dataForTestGetCell1() {
@@ -85,7 +85,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestGetCell2")
-    public void testGetCell2(GameMap gameMap, Cell result) {
+    public void testGetCell2(GameplayMap gameMap, Cell result) {
         Assertions.assertEquals(result, gameMap.getCell(result));
     }
     public static Stream<Arguments> dataForTestGetCell2() {
@@ -98,7 +98,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestGetRow")
-    public void testGetRow(GameMap gameMap, Cell cell, Cell[] result) {
+    public void testGetRow(GameplayMap gameMap, Cell cell, Cell[] result) {
         Assertions.assertArrayEquals(result, gameMap.getRow(cell));
     }
     public static Stream<Arguments> dataForTestGetRow() {
@@ -124,7 +124,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestGetColumn")
-    public void testGetColumn(GameMap gameMap, Cell cell, Cell[] result) {
+    public void testGetColumn(GameplayMap gameMap, Cell cell, Cell[] result) {
         Assertions.assertArrayEquals(result, gameMap.getColumn(cell));
     }
     public static Stream<Arguments> dataForTestGetColumn() {
@@ -149,7 +149,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestGetD1")
-    public void testGetD1(GameMap gameMap, Cell cell, Cell[] result) {
+    public void testGetD1(GameplayMap gameMap, Cell cell, Cell[] result) {
         Assertions.assertArrayEquals(result, gameMap.getD1(cell));
     }
     public static Stream<Arguments> dataForTestGetD1() {
@@ -177,7 +177,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestGetD2")
-    public void testGetD2(GameMap gameMap, Cell cell, Cell[] result) {
+    public void testGetD2(GameplayMap gameMap, Cell cell, Cell[] result) {
         Assertions.assertArrayEquals(result, gameMap.getD2(cell));
     }
     public static Stream<Arguments> dataForTestGetD2() {
@@ -206,7 +206,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestIsD1")
-    public void testIsD1(GameMap gameMap, boolean result, Cell cell, int length) {
+    public void testIsD1(GameplayMap gameMap, boolean result, Cell cell, int length) {
         Assertions.assertEquals(result, gameMap.isD1(cell, length));
     }
     public static Stream<Arguments> dataForTestIsD1() {
@@ -251,7 +251,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestIsD2")
-    public void testIsD2(GameMap gameMap, boolean result, Cell cell, int length) {
+    public void testIsD2(GameplayMap gameMap, boolean result, Cell cell, int length) {
         Assertions.assertEquals(result, gameMap.isD2(cell, length));
     }
     public static Stream<Arguments> dataForTestIsD2() {
@@ -296,7 +296,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestGetSize")
-    public void testGetSize(GameMap gameMap, String result) {
+    public void testGetSize(GameplayMap gameMap, String result) {
         Assertions.assertEquals(result, gameMap.getSize());
     }
     public static Stream<Arguments> dataForTestGetSize() {
@@ -309,7 +309,7 @@ public class GameMapTest {
 
     @ParameterizedTest
     @MethodSource("dataForTestMapAsString")
-    public void testMapAsString(GameMap gameMap, List<String> result) {
+    public void testMapAsString(GameplayMap gameMap, List<String> result) {
         Assertions.assertLinesMatch(result, gameMap.mapAsString());
     }
     public static Stream<Arguments> dataForTestMapAsString() {
@@ -343,7 +343,7 @@ public class GameMapTest {
         List<Arguments> out = new ArrayList<>();
         out.add(Arguments.arguments(gameMap33, result33));
         out.add(Arguments.arguments(gameMap53, result53));
-       out.add(Arguments.arguments(gameMap55, result55));
+        out.add(Arguments.arguments(gameMap55, result55));
         return out.stream();
     }
 

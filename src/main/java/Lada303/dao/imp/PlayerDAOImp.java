@@ -18,9 +18,7 @@ import java.sql.SQLException;
 public class PlayerDAOImp implements PlayerDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerDAOImp.class);
     private static final String SQL_INSERT_NEW_GAMEPLAY_PLAYER =
-            "INSERT INTO players (id_gameplay, player_id, player_name, player_symbol, player_score) VALUES (?, ?, ?, ?, ?);";
-    private static final String SQL_UPDATE_PLAYER_SCORE =
-            "UPDATE players SET player_score = player_score + 1 WHERE id_gameplay = ? and player_id = ?;";
+            "INSERT INTO players (id_gameplay, player_id, player_name, player_symbol) VALUES (?, ?, ?, ?);";
     private static final String SQL_GET_GAMEPLAY_PLAYER =
             "SELECT player_id, player_name, player_symbol FROM players WHERE id_gameplay = ? and player_id = ? ";
 
@@ -41,20 +39,6 @@ public class PlayerDAOImp implements PlayerDAO {
             prStmt.setInt(2, player.getId());
             prStmt.setString(3, player.getName());
             prStmt.setString(4, player.getDots().name());
-            prStmt.setInt(5, player.getScore());
-            prStmt.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Exc: " + e.getMessage());
-        }
-    }
-
-    public void incrementScore(int id_gameplay, int player_id) {
-        db.setConnection();
-        PreparedStatement prStmt;
-        try {
-            prStmt = db.getConnection().prepareStatement(SQL_UPDATE_PLAYER_SCORE);
-            prStmt.setInt(1, id_gameplay);
-            prStmt.setInt(2, player_id);
             prStmt.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("Exc: " + e.getMessage());

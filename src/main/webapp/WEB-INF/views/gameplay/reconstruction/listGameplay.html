@@ -9,11 +9,11 @@
 <h1>Select gameplay</h1>
 <h3>
     <div th:each="gameplay : ${listGameplay}">
-        <a th:href="@{/gameplay/reconstruction/db/{id}(id=${gameplay.getId_gameplay()})}" th:text="${gameplay.getId_gameplay()}"></a>
+        <a th:href="@{/gameplay/reconstruction/db/{id}(id=${gameplay.getId()})}" th:text="${gameplay.getId()}"></a>
         <a>___</a>
-        <a th:text="${gameplay.getName_gameplay()}"></a>
+        <a th:text="${gameplay.getName()}"></a>
         <a>___</a>
-        <a th:text="${gameplay.getMap_size()}"></a>
+        <a th:text="${gameplay.getMapSize()}"></a>
     </div>
     <br/>
     <br/>

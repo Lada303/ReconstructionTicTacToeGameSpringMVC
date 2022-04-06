@@ -1,8 +1,8 @@
 package Lada303.models.players;
 
-import Lada303.services.game.Game;
+import Lada303.models.Gameplay;
 import Lada303.utils.enums.Dots;
-import Lada303.models.gamemap.GameMap;
+import Lada303.services.gameplay.gameplaymap.GameplayMap;
 
 public class HumanGamer extends Gamer {
 
@@ -11,7 +11,7 @@ public class HumanGamer extends Gamer {
     }
 
     @Override
-    public boolean doStep(Game game) {
+    public boolean doStep(Gameplay game) {
         int x = this.getCell().getColumnNumber();
         int y = this.getCell().getRowNumber();
         if (isValidEmpty(x, y, game.getMap())) {
@@ -22,7 +22,7 @@ public class HumanGamer extends Gamer {
         return false;
     }
 
-    private boolean isValidEmpty(int x, int y, GameMap map) {
+    private boolean isValidEmpty(int x, int y, GameplayMap map) {
         return map.isCellValid(x, y) && map.getCell(x, y).isEmptyCell();
     }
 }

@@ -36,7 +36,7 @@ public class StepDAOImp implements StepDAO {
         try {
             prStmt = db.getConnection().prepareStatement(SQL_INSERT_NEW_GAMEPLAY_STEP);
             prStmt.setInt(1, id_gameplay);
-            prStmt.setInt(2, step.getNum());
+            prStmt.setInt(2, step.getNumber());
             prStmt.setInt(3, step.getPlayerId());
             prStmt.setString(4, step.getCellValue());
             prStmt.executeUpdate();
@@ -55,7 +55,7 @@ public class StepDAOImp implements StepDAO {
             ResultSet rs = prStmt.executeQuery();
             while(rs.next()) {
                 Step step = new Step();
-                step.setNum(rs.getInt(1));
+                step.setNumber(rs.getInt(1));
                 step.setPlayerId(rs.getInt(2));
                 step.setCellValue(rs.getString(3));
                 listStep.add(step);
@@ -63,7 +63,7 @@ public class StepDAOImp implements StepDAO {
         } catch (SQLException e) {
             LOGGER.error("Exc: " + e.getMessage());
         }
-        System.out.println(listStep);
         return listStep;
     }
+
 }

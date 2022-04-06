@@ -4,8 +4,8 @@ package Lada303.models.players;
 интерфейс, описывающий что может делать игрок
  */
 
-import Lada303.services.game.Game;
+import Lada303.models.Gameplay;
 
 public interface GamerDoing {
-    boolean doStep(Game game);
+    boolean doStep(Gameplay game);
 }

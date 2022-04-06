@@ -99,7 +99,7 @@ public class StaXParser implements Parser{
             while (attributes.hasNext()) {
                 Attribute attribute = attributes.next();
                 if (attribute.getName().toString().equals(ParserTag.STEP_NUM)) {
-                    ((Step) element).setNum(Integer.parseInt(attribute.getValue()));
+                    ((Step) element).setNumber(Integer.parseInt(attribute.getValue()));
                 }
                 if (attribute.getName().toString().equals(ParserTag.STEP_PLAYER_ID)) {
                     ((Step) element).setPlayerId(Integer.parseInt(attribute.getValue()));

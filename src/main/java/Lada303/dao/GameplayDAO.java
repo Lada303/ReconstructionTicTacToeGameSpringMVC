@@ -5,7 +5,8 @@ import Lada303.models.Gameplay;
 import java.util.List;
 
 public interface GameplayDAO {
-    void addNewGameplay(String name_gameplay);
+    void addNewGameplay(Gameplay gameplay);
     int getLastGameplayId();
     List<Gameplay> getAllGameplay();
+    String getGameplayMapSize(int id_gameplay);
 }

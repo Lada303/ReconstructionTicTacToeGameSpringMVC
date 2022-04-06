@@ -1,4 +1,4 @@
-package Lada303.models.gamemap;
+package Lada303.services.gameplay.gameplaymap;
 
 import Lada303.utils.enums.Dots;
 

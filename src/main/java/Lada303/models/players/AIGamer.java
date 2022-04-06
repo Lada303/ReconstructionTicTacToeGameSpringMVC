@@ -1,9 +1,9 @@
 package Lada303.models.players;
 
-import Lada303.services.game.Game;
-import Lada303.models.gamemap.Cell;
+import Lada303.models.Gameplay;
+import Lada303.services.gameplay.gameplaymap.Cell;
 import Lada303.utils.enums.Dots;
-import Lada303.models.gamemap.GameMap;
+import Lada303.services.gameplay.gameplaymap.GameplayMap;
 
 import java.util.Random;
 
@@ -16,8 +16,8 @@ public class AIGamer extends Gamer {
     }
 
     @Override
-    public boolean doStep(Game game) {
-        GameMap map = game.getMap();
+    public boolean doStep(Gameplay game) {
+        GameplayMap map = game.getMap();
         for (int decrement = 1; decrement <  game.getDots_to_win(); decrement++) {
             //шаг для победы
             if (decrement == 1 && isAIStep(this.getCell(), decrement, game)) {
@@ -41,10 +41,9 @@ public class AIGamer extends Gamer {
     }
 
     //выбирает шаг
-    private boolean isAIStep(Cell lastCell, int decrement, Game game) {
-        GameMap map = game.getMap();
-        if (lastCell == null ||
-                game.getGameManager().getCountStep() < game.getDots_to_win() * 2 - 1 && lastCell.getDot() == Dots.O) {
+    private boolean isAIStep(Cell lastCell, int decrement, Gameplay game) {
+        GameplayMap map = game.getMap();
+        if (lastCell == null) {
             return false;
         }
         if (map.isD1(lastCell, game.getDots_to_win())

@@ -101,7 +101,7 @@ public class JacksonParser implements Parser{
                 }
                 if (jsonParser.getCurrentName().equals(ParserTag.STEP_NUM)) {
                     jsonParser.nextToken();
-                    ((Step) element).setNum(jsonParser.getValueAsInt());
+                    ((Step) element).setNumber(jsonParser.getValueAsInt());
                 }
                 if (jsonParser.getCurrentName().equals(ParserTag.STEP_PLAYER_ID)) {
                     jsonParser.nextToken();

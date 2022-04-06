@@ -18,10 +18,13 @@ import java.util.List;
 @Component
 public class GameplayDAOImp implements GameplayDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameplayDAOImp.class);
-    private static final String SQL_INSERT_NEW_GAMEPLAY = "INSERT INTO gameplay (name_gameplay) VALUES (?);";
+    private static final String SQL_INSERT_NEW_GAMEPLAY =
+            "INSERT INTO gameplay (name_gameplay, map_size, dots_to_win) VALUES (?, ?, ?);";
     private static final String SQL_GET_LAST_GAMEPLAY = "SELECT max(id_gameplay) FROM gameplay;";
     private static final String SQL_GET_ALL_GAMEPLAY =
-            "SELECT gameplay.id_gameplay, name_gameplay, map_size FROM gameplay JOIN maps USING(id_gameplay)";
+            "SELECT * FROM gameplay";
+    private static final String SQL_GET_GAMEPLAY_MAP_SIZE =
+            "SELECT map_size FROM gameplay WHERE id_gameplay = ?;";
 
     private final ConnectorDB db;
 
@@ -30,18 +33,22 @@ public class GameplayDAOImp implements GameplayDAO {
         this.db = db;
     }
 
-    public void addNewGameplay(String name_gameplay) {
+    @Override
+    public void addNewGameplay(Gameplay gameplay) {
         db.setConnection();
         PreparedStatement prStmt;
         try {
             prStmt = db.getConnection().prepareStatement(SQL_INSERT_NEW_GAMEPLAY);
-            prStmt.setString(1, name_gameplay);
+            prStmt.setString(1, gameplay.getName());
+            prStmt.setString(2, gameplay.getMapSize());
+            prStmt.setInt(3, gameplay.getDots_to_win());
             prStmt.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("Exc: " + e.getMessage());
         }
     }
 
+    @Override
     public int getLastGameplayId() {
         db.setConnection();
         int id = 0;
@@ -57,6 +64,7 @@ public class GameplayDAOImp implements GameplayDAO {
         return id;
     }
 
+    @Override
     public List<Gameplay> getAllGameplay() {
         db.setConnection();
         List<Gameplay> listGameplay = new ArrayList<>();
@@ -66,9 +74,10 @@ public class GameplayDAOImp implements GameplayDAO {
             ResultSet rs  = stmt.executeQuery(SQL_GET_ALL_GAMEPLAY);
             while(rs.next()) {
                 Gameplay gameplay = new Gameplay();
-                gameplay.setId_gameplay(rs.getInt(1));
-                gameplay.setName_gameplay(rs.getString(2));
-                gameplay.setMap_size(rs.getString(3));
+                gameplay.setId(rs.getInt(1));
+                gameplay.setName(rs.getString(2));
+                gameplay.setMapSize(rs.getString(3));
+                gameplay.setDots_to_win(rs.getInt(4));
                 listGameplay.add(gameplay);
             }
         } catch (SQLException e) {
@@ -76,4 +85,21 @@ public class GameplayDAOImp implements GameplayDAO {
         }
         return listGameplay;
     }
+
+    @Override
+    public String getGameplayMapSize(int id_gameplay) {
+        db.setConnection();
+        PreparedStatement prStmt;
+        try {
+            prStmt = db.getConnection().prepareStatement(SQL_GET_GAMEPLAY_MAP_SIZE);
+            prStmt.setInt(1, id_gameplay);
+            ResultSet rs = prStmt.executeQuery();
+            rs.next();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            LOGGER.error("Exc: " + e.getMessage());
+        }
+        return "";
+    }
+
 }

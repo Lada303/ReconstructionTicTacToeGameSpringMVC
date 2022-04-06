@@ -16,8 +16,6 @@ public class WinnerDAOImp implements WinnerDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(WinnerDAOImp.class);
     private static final String SQL_INSERT_NEW_GAMEPLAY_WINNER =
             "INSERT INTO winners (id_gameplay, winner_player_id) VALUES (?, ?);";
-    private static final String SQL_INSERT_NEW_GAMEPLAY_DRAW =
-            "INSERT INTO winners (id_gameplay) VALUES (?);";
     private static final String SQL_GET_GAMEPLAY_WINNER =
             "SELECT winner_player_id FROM winners WHERE id_gameplay = ?;";
 
@@ -28,18 +26,14 @@ public class WinnerDAOImp implements WinnerDAO {
         this.db = db;
     }
 
+    @Override
     public void addNewWinner(int id_gameplay, int id_winner) {
         db.setConnection();
         PreparedStatement prStmt;
         try {
-            if (id_winner == 0) {
-                prStmt = db.getConnection().prepareStatement(SQL_INSERT_NEW_GAMEPLAY_DRAW);
-                prStmt.setInt(1, id_gameplay);
-            } else {
-                prStmt = db.getConnection().prepareStatement(SQL_INSERT_NEW_GAMEPLAY_WINNER);
-                prStmt.setInt(1, id_gameplay);
-                prStmt.setInt(2, id_winner);
-            }
+            prStmt = db.getConnection().prepareStatement(SQL_INSERT_NEW_GAMEPLAY_WINNER);
+            prStmt.setInt(1, id_gameplay);
+            prStmt.setInt(2, id_winner);
             prStmt.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("Exc: " + e.getMessage());

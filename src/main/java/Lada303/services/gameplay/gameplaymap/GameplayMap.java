@@ -1,14 +1,14 @@
-package Lada303.models.gamemap;
+package Lada303.services.gameplay.gameplaymap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GameMap {
+public class GameplayMap {
 
     private final Cell[][] map;
 
-    public GameMap(int x, int y) {
+    public GameplayMap(int x, int y) {
         map = new Cell[y][x];
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {

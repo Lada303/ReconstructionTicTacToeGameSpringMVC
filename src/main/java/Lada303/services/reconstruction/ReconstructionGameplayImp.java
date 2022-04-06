@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ReconstructionGame {
+public class ReconstructionGameplayImp implements ReconstructionGameplay{
 
     private final CoordinateConvector coordinateConvector;
 
     @Autowired
-    public ReconstructionGame(@Qualifier("myCoordinateConvector") CoordinateConvector coordinateConvector) {
+    public ReconstructionGameplayImp(@Qualifier("myCoordinateConvector") CoordinateConvector coordinateConvector) {
         this.coordinateConvector = coordinateConvector;
     }
 

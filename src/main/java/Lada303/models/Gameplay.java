@@ -7,6 +7,9 @@ import Lada303.services.gameplay.gameplaymap.GameplayMap;
 import Lada303.models.players.Gamer;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class Gameplay {
 
@@ -17,6 +20,13 @@ public class Gameplay {
     private Gamer gamer1;
     private Gamer gamer2;
     private GameplayMap map;
+    private String mode;
+    private String typeWriter;
+    private final List<Step> listStep;
+
+    public Gameplay() {
+        this.listStep = new ArrayList<>();
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -47,6 +57,14 @@ public class Gameplay {
         this.dots_to_win = dots_to_win;
     }
 
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public void setTypeWriter(String typeWriter) {
+        this.typeWriter = typeWriter;
+    }
+
     public int getId() {
         return id;
     }
@@ -75,4 +93,27 @@ public class Gameplay {
         return dots_to_win;
     }
 
+    public String getMode() {
+        return mode;
+    }
+
+    public String getTypeWriter() {
+        return typeWriter;
+    }
+
+    public List<Step> getListStep() {
+        return listStep;
+    }
+
+    public void clearListStep() {
+        listStep.clear();
+    }
+
+    public void addToListStep(Step step) {
+        listStep.add(step);
+    }
+
+    public Step getLastStep() {
+        return listStep.get(listStep.size() - 1);
+    }
 }

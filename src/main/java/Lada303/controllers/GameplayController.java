@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class GameplayController {
 
     private final GameplayService gameplayService;
-    private Gameplay gameplay;
+    private final Gameplay gameplay;
     private final GameplayDAO gameplayDAO;
     private final PlayerDAO playerDAO;
     private final StepDAO stepDAO;
@@ -26,11 +26,13 @@ public class GameplayController {
 
     @Autowired
     public GameplayController(GameplayService gameplayService,
+                              Gameplay gameplay,
                               GameplayDAO gameplayDAO,
                               PlayerDAO playerDAO,
                               StepDAO stepDAO,
                               WinnerDAO winnerDAO) {
         this.gameplayService = gameplayService;
+        this.gameplay = gameplay;
         this.gameplayDAO = gameplayDAO;
         this.playerDAO = playerDAO;
         this.stepDAO = stepDAO;
@@ -41,10 +43,9 @@ public class GameplayController {
     public String modeGame(@RequestParam("mode") String mode,
                            @RequestParam("type") String type,
                            Model model) {
-        gameplay = gameplayService.getGameplay();
-        gameplayService.setStartData();
-        gameplayService.setMode(mode);
-        gameplayService.setTypeWriter(type);
+        gameplay.setMode(mode);
+        gameplay.setTypeWriter(type);
+        gameplayService.setStartData(gameplay);
         model.addAttribute("name2", mode.equals("AI") ? "AI" : "");
         return "gameplay/game/playerForm";
     }
@@ -54,14 +55,13 @@ public class GameplayController {
                                      @RequestParam("name2") String name2,
                                      Model model) {
         gameplay.setGamer1(new HumanGamer(1, (name1.isEmpty() ? "Player1" : name1), Dots.X));
-        if (gameplayService.getMode().equals("AI")) {
+        if (gameplay.getMode().equals("AI")) {
             gameplay.setGamer2(new AIGamer(2, "AI", Dots.O));
         }
         else {
             gameplay.setGamer2(new HumanGamer(2, (name2.isEmpty() ? "Player2" : name2), Dots.O));
         }
         gameplay.setName(gameplay.getGamer1().getName() + "Vs" + gameplay.getGamer2().getName());
-        gameplayService.setWriter();
 
         model.addAttribute("msg", "Set the size of the field and the number of dots to win");
         return "gameplay/game/mapForm";
@@ -91,15 +91,14 @@ public class GameplayController {
         }
         gameplay.setMap(mapX, mapY);
         gameplay.setDots_to_win(dots_to_win);
+        gameplay.clearListStep();
 
         gameplayDAO.addNewGameplay(gameplay);
         gameplay.setId(gameplayDAO.getLastGameplayId());
         playerDAO.addNewGameplay(gameplay.getId(), gameplay.getGamer1());
         playerDAO.addNewGameplay(gameplay.getId(), gameplay.getGamer2());
 
-        gameplayService.resetCountStep();
-        gameplayService.clearListStep();
-        gameplayService.resetWhoseMove();
+        gameplayService.startNewRound();
 
         model.addAttribute("msg", "Start game");
         model.addAttribute("playerName", gameplay.getGamer1().getName());
@@ -113,11 +112,16 @@ public class GameplayController {
     public String doingStep(@RequestParam(value = "X", required = false) int stepX,
                             @RequestParam(value = "Y", required = false) int stepY,
                             Model model) {
+
+
         if (gameplayService.isPlayerDidStep(stepX - 1, stepY - 1)) {
-            stepDAO.addNewStep(gameplay.getId(), gameplayService.getLastStep());
+            stepDAO.addNewStep(gameplay.getId(), gameplay.getLastStep());
             if (gameplayService.isTheEndOfRound()) {
-                winnerDAO.addNewWinner(gameplay.getId(), gameplayService.getLastWinner_id());
-                model.addAttribute("msg", "Winner -> " + gameplayService.getLastWinner());
+                int index_Winner = gameplayService.getLastWinner_id();
+                winnerDAO.addNewWinner(gameplay.getId(), index_Winner);
+                String name_winner = index_Winner == 1 ? gameplay.getGamer1().getName() :
+                        (index_Winner == 2 ? gameplay.getGamer2().getName() : "Draw!");
+                model.addAttribute("msg", "Winner -> " + name_winner);
                 model.addAttribute("lines", gameplay.getMap().mapAsString());
                 return "gameplay/game/endRoundPage";
             }
@@ -126,10 +130,11 @@ public class GameplayController {
             model.addAttribute("msg", "Wrong step. Try again");
         }
 
-        model.addAttribute("playerName", gameplayService.getWhoseMove() == 1 ?
-                gameplay.getGamer1().getName() : gameplay.getGamer2().getName());
-        model.addAttribute("playerDot", gameplayService.getWhoseMove() == 1 ?
-                gameplay.getGamer1().getDots() : gameplay.getGamer2().getDots());
+        int index_last_player = gameplay.getLastStep().getPlayerId();
+        model.addAttribute("playerName", index_last_player == 1 ?
+                gameplay.getGamer2().getName() : gameplay.getGamer1().getName());
+        model.addAttribute("playerDot", index_last_player == 1 ?
+                gameplay.getGamer2().getDots() : gameplay.getGamer1().getDots());
         model.addAttribute("dots_to_win", gameplay.getDots_to_win());
         model.addAttribute("lines", gameplay.getMap().mapAsString());
         return "gameplay/game/stepForm";
